@@ -248,6 +248,7 @@
   justify-content: center;
   gap: 16px;
   margin-top: 32px;
+  flex-wrap: wrap;
 }
 
 .pagination .btn {
@@ -259,6 +260,7 @@
   cursor: pointer;
   font-weight: 500;
   transition: all 0.2s ease;
+  font-family: "Bubblegum Sans", sans-serif;
 }
 
 .pagination .btn:hover:not(:disabled) {
@@ -275,6 +277,8 @@
 .page-numbers {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .page-number {
@@ -286,6 +290,7 @@
   font-weight: 500;
   min-width: 40px;
   text-align: center;
+  font-family: "Bubblegum Sans", sans-serif;
 }
 
 .page-number:hover {
@@ -306,4 +311,41 @@
   background: #fff;
   display: grid;
   place-items: center;
+}
+
+/* Responsive pagination */
+@media (max-width: 768px) {
+  .pagination {
+    gap: 12px;
+    margin-top: 24px;
+  }
+  
+  .pagination .btn {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+  
+  .page-numbers {
+    gap: 6px;
+  }
+  
+  .page-number {
+    padding: 8px 12px;
+    min-width: 36px;
+    font-size: 14px;
+  }
+  
+  .movie-list {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  
+  .movie-card {
+    max-width: 200px;
+    height: 380px;
+  }
+  
+  .movie-card img {
+    height: 200px;
+  }
 }

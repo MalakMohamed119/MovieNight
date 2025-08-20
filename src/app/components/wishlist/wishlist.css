@@ -139,3 +139,51 @@
 .btn-remove:hover { background: red;
   color: #fffdfd;
  } 
+
+/* Responsive wishlist */
+@media (max-width: 768px) {
+  .wishlist {
+    padding: 0.5rem;
+  }
+  
+  .wishlist h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .search-input {
+    max-width: 100%;
+    font-size: 0.85rem;
+    padding: 10px 14px;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  
+  .card {
+    max-width: 180px;
+  }
+  
+  .card img {
+    height: 240px;
+  }
+  
+  .info {
+    padding: 10px 12px 12px;
+  }
+  
+  .info h3 {
+    font-size: 1rem;
+  }
+  
+  .muted {
+    font-size: 0.9rem;
+  }
+  
+  .btn-remove {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+} 

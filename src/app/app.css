@@ -6,6 +6,10 @@ html, body {
   font-family: "Bubblegum Sans", sans-serif;
 }
 
+body {
+  padding-top: 80px;
+}
+
 app-root {
   display: flex;
   flex-direction: column;
