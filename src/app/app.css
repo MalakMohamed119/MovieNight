@@ -4,16 +4,19 @@ html, body {
   min-height: 100vh;
   height: 100%;
   font-family: "Bubblegum Sans", sans-serif;
+  background: #000000;
 }
 
 body {
   padding-top: 80px;
+  background: #000000;
 }
 
 app-root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: #000000;
 }
 
 router-outlet + * {
@@ -21,15 +24,24 @@ router-outlet + * {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 80px);
+  background: #000000;
 }
 
 app-footer {
   margin-top: auto;
   flex-shrink: 0;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #000000;
+  width: 100%;
 }
 
 .container {
   min-height: calc(100vh - 200px);
+  background: #000000;
 }
 
 /* Bootstrap-like utility classes */
