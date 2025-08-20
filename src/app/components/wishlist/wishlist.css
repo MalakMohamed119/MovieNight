@@ -3,6 +3,7 @@
   min-height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
+  margin-top: 100px;
   background: #000000;
   color: #e5e7eb;
   font-family: "Bubblegum Sans", sans-serif;
