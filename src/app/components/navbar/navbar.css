@@ -1,0 +1,33 @@
+.navbar {
+  background: #000000 !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  width: 100%;
+  margin: 0;
+  padding: 16px 20px;
+}
+
+.navbar-brand {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+  font-size: 40px;
+  
+  letter-spacing: 0.2px;
+  font-family: "Bubblegum Sans", sans-serif;
+}
+
+.nav-link {
+  color: #e5e7eb !important;
+  transition: color 0.2s ease, transform 0.2s ease;
+  font-size: 20px;
+  font-family: "Bubblegum Sans", sans-serif;
+}
+
+.nav-link:hover {
+  color: #fbbf24 !important;
+  transform: translateY(-1px);
+}
+
+.active-link {
+  color: #fbbf24 !important;
+  font-weight: 600;
+}

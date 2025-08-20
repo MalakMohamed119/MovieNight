@@ -1,0 +1,17 @@
+<div class="recommendations">
+  <h3>Recommended Movies</h3>
+  
+  <div *ngIf="loading" class="loading">
+    <p>Loading recommendations...</p>
+  </div>
+  
+  <div *ngIf="!loading && recommendedMovies.length > 0" class="recommendation-grid">
+    <div *ngFor="let movie of recommendedMovies" class="recommendation-card">
+      <img [src]="'https://image.tmdb.org/t/p/w300' + movie.poster_path" [alt]="movie.title">
+      <div class="movie-info">
+        <h4>{{ movie.title }}</h4>
+        <p class="rating">⭐ {{ movie.vote_average }}/10</p>
+      </div>
+    </div>
+  </div>
+</div>

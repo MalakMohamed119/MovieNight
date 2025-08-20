@@ -1,0 +1,44 @@
+<section class="hero">
+  <div class="hero-content ">
+    <h1>Welcome to Our Movie App</h1>
+    <p class="subtitle">Millions of movies, TV shows and people to discover</p>
+    <div class="search">
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Search movies..." />
+    </div>
+  </div>
+</section>
+
+<div class="movies">
+  <h2>Now Playing :</h2>
+  <div class="movie-list">
+    <div *ngFor="let movie of filteredMovies" class="movie-card">
+      <div class="poster-wrap">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" [alt]="movie.title">
+      </div>
+      <div class="card-body">
+        <h3>{{ movie.title }}</h3>
+        <p class="desc">{{ truncateDescription(movie.overview) }}</p>
+        <div class="card-actions">
+          <span class="rating">⭐ {{ movie.vote_average }}/10</span>
+          <button class="heart" (click)="toggleWishlist(movie)" [class.active]="isWishlisted(movie)" aria-label="Toggle wishlist">
+            <i [ngClass]="isWishlisted(movie) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination">
+    <button class="btn" (click)="prevPage()" [disabled]="page === 1">Previous</button>
+    <div class="page-numbers">
+      <span *ngFor="let pageNum of getPageNumbers()" 
+            class="page-number" 
+            [class.active]="pageNum === page"
+            (click)="goToPage(pageNum)">
+        {{ pageNum }}
+      </span>
+    </div>
+    <button class="btn" (click)="nextPage()" [disabled]="page === totalPages">Next</button>
+  </div>
+</div>
+  

@@ -1,0 +1,29 @@
+<div class="wishlist">
+  <h2>Wishlist :</h2>
+  
+  <div class="search-section">
+    <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="filterItems()" placeholder="Search wishlist..." class="search-input">
+  </div>
+
+  <div *ngIf="filteredItems.length === 0 && items.length > 0" class="empty">
+    No movies found matching your search.
+  </div>
+
+  <div *ngIf="filteredItems.length === 0 && items.length === 0" class="empty empty-state">
+    <div>
+      <p>Your wishlist is empty.</p>
+      <a routerLink="/trendify" class="btn-back">Back to Home</a>
+    </div>
+  </div>
+
+  <div *ngIf="filteredItems.length > 0" class="grid">
+    <div *ngFor="let item of filteredItems" class="card">
+      <img [src]="'https://image.tmdb.org/t/p/w300' + item.poster_path" [alt]="item.title">
+      <div class="info">
+        <h3>{{ item.title }}</h3>
+        <p class="muted">⭐ {{ item.vote_average }}/10</p>
+        <button class="btn-remove" (click)="remove(item.id)">Remove</button>
+      </div>
+    </div>
+  </div>
+</div> 
