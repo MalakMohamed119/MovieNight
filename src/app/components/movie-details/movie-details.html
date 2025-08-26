@@ -1,0 +1,79 @@
+<div class="movie-details-container mt-48 mb-0" [hidden]="loading || !movie">
+  <div class="movie-header ">
+    <div class="poster-section ">
+      <img 
+        [src]="movie?.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://via.placeholder.com/500x750/1a1a1a/fbbf24?text=No+Image'" 
+        [alt]="movie?.title" 
+        class="movie-poster" 
+        (error)="onImgError($event)">
+    </div>
+    
+    <div class="movie-info">
+      <h1 class="movie-title">{{ movie?.title }}</h1>
+      @if (movie?.tagline) {
+        <p class="tagline">{{ movie.tagline }}</p>
+      }
+      
+      <div class="movie-meta">
+        <span class="rating">⭐ {{ movie?.vote_average }}/10</span>
+        @if (movie?.runtime) {
+          <span class="runtime">{{ getRuntimeFormatted() }}</span>
+        }
+        <span class="release-date">{{ movie?.release_date | date:'yyyy' }}</span>
+      </div>
+      
+      @if (movie?.genres?.length) {
+        <div class="genres">
+          @for (genre of movie.genres; track genre.id) {
+            <span class="genre-tag">{{ genre.name }}</span>
+          }
+        </div>
+      }
+      
+      <div class="overview">
+        <h3>Overview</h3>
+        <p>{{ movie?.overview }}</p>
+      </div>
+      
+      <div class="actions">
+        <button class="wishlist-btn" (click)="movie && toggleWishlist(movie)" [class.active]="movie && isWishlisted(movie)">
+          <i [ngClass]="movie && isWishlisted(movie) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+          {{ movie && isWishlisted(movie) ? 'Remove from Wishlist' : 'Add to Wishlist' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="recommendations-section">
+    <h2>Recommendations</h2>
+    <div class="recommendations-grid">
+      @for (rec of recommendations; track rec.id) {
+        <div class="recommendation-card" (click)="rec && goToMovieDetails(rec.id)">
+          <div class="rec-poster">
+            <img 
+              [src]="rec?.poster_path ? 'https://image.tmdb.org/t/p/w300' + rec.poster_path : 'https://via.placeholder.com/300x450/1a1a1a/fbbf24?text=No+Image'" 
+              [alt]="rec?.title" 
+              (error)="onImgError($event)">
+          </div>
+          <div class="rec-info">
+            <h4>{{ rec?.title }}</h4>
+            <span class="rec-rating">⭐ {{ rec?.vote_average }}/10</span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+@if (loading) {
+  <div class="loading">
+    <p>Loading movie details...</p>
+  </div>
+}
+
+@if (!loading && !movie) {
+  <div class="error pb-5">
+    <p>Movie not found</p>
+    <button (click)="goBack()">Go Back</button>
+  </div>
+}

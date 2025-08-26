@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Trendify } from './trendify';
+import { TrendifyComponent } from './trendify';
 
-describe('Trendify', () => {
-  let component: Trendify;
-  let fixture: ComponentFixture<Trendify>;
+describe('TrendifyComponent', () => {
+  let component: TrendifyComponent;
+  let fixture: ComponentFixture<TrendifyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Trendify]
+      imports: [TrendifyComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Trendify);
+    fixture = TestBed.createComponent(TrendifyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

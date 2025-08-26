@@ -27,4 +27,20 @@ export class MovieService {
 
     return this.http.get(`${this.baseUrl}/trending/movie/week?page=1`, { headers });
   }
+
+  getMovieDetails(movieId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.accessToken}`,
+    });
+
+    return this.http.get(`${this.baseUrl}/movie/${movieId}`, { headers });
+  }
+
+  getMovieRecommendations(movieId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.accessToken}`,
+    });
+
+    return this.http.get(`${this.baseUrl}/movie/${movieId}/recommendations`, { headers });
+  }
 }

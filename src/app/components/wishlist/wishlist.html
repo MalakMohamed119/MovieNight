@@ -1,29 +1,43 @@
-<div class="wishlist">
+<div class="wishlist pt-5">
   <h2>Wishlist :</h2>
   
   <div class="search-section">
     <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="filterItems()" placeholder="Search wishlist..." class="search-input">
   </div>
 
-  <div *ngIf="filteredItems.length === 0 && items.length > 0" class="empty">
-    No movies found matching your search.
-  </div>
-
-  <div *ngIf="filteredItems.length === 0 && items.length === 0" class="empty empty-state">
-    <div>
-      <p>Your wishlist is empty.</p>
-      <a routerLink="/trendify" class="btn-back">Back to Home</a>
+  @if (filteredItems.length === 0 && items.length > 0) {
+    <div class="empty">
+      No movies found matching your search.
     </div>
-  </div>
+  }
 
-  <div *ngIf="filteredItems.length > 0" class="grid">
-    <div *ngFor="let item of filteredItems" class="card">
-      <img [src]="'https://image.tmdb.org/t/p/w300' + item.poster_path" [alt]="item.title">
-      <div class="info">
-        <h3>{{ item.title }}</h3>
-        <p class="muted">⭐ {{ item.vote_average }}/10</p>
-        <button class="btn-remove" (click)="remove(item.id)">Remove</button>
+  @if (filteredItems.length === 0 && items.length === 0) {
+    <div class="empty empty-state">
+      <div>
+        <p>Your wishlist is empty.</p>
+        <a routerLink="/trendify" class="btn-back">Back to Home</a>
       </div>
     </div>
-  </div>
-</div> 
+  }
+
+  @if (filteredItems.length > 0) {
+    <div class="grid">
+      @for (item of filteredItems; track item.id) {
+        <div class="card">
+          <div class="movie-link" (click)="goToMovieDetails(item.id, item.title)">
+            <img 
+              [src]="item.poster_path ? 'https://image.tmdb.org/t/p/w300' + item.poster_path : 'https://via.placeholder.com/300x450/1a1a1a/fbbf24?text=No+Image'" 
+              [alt]="item.title" 
+              (error)="onImgError($event)">
+            
+            <div class="info">
+              <h3>{{ item.title }}</h3>
+              <p class="muted">⭐ {{ item.vote_average }}/10</p>
+            </div>
+          </div>
+          <button class="btn-remove" (click)="remove(item.id)">Remove</button>
+        </div>
+      }
+    </div>
+  }
+</div>
