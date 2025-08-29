@@ -3,7 +3,7 @@
     <h1>Welcome to Our Movie App</h1>
     <p class="subtitle">Millions of movies, TV shows and people to discover</p>
     <div class="search">
-      <input type="text" [(ngModel)]="searchQuery" placeholder="Search movies..." />
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Search movies..." (input)="onSearchInput()" />
     </div>
   </div>
 </section>
@@ -41,18 +41,18 @@
   </div>
 
   <div class="pagination">
-    <button class="btn" (click)="prevPage()" [disabled]="page === 1">Previous</button>
+    <button class="btn" (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
     
     <div class="page-numbers">
       @for (pageNum of getPageNumbers(); track pageNum) {
         <span class="page-number" 
-              [class.active]="pageNum === page"
+              [class.active]="pageNum === currentPage"
               (click)="goToPage(pageNum)">
           {{ pageNum }}
         </span>
       }
     </div>
     
-    <button class="btn" (click)="nextPage()" [disabled]="page === totalPages">Next</button>
+    <button class="btn" (click)="nextPage()" [disabled]="currentPage === currentTotalPages">Next</button>
   </div>
 </div>

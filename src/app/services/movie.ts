@@ -43,4 +43,13 @@ export class MovieService {
 
     return this.http.get(`${this.baseUrl}/movie/${movieId}/recommendations`, { headers });
   }
+
+  searchMovies(query: string, page: number = 1): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.accessToken}`,
+    });
+
+    const encodedQuery = encodeURIComponent(query.trim());
+    return this.http.get(`${this.baseUrl}/search/movie?query=${encodedQuery}&page=${page}`, { headers });
+  }
 }

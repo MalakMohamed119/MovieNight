@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgClass, DatePipe } from '@angular/common';
 import { MovieService } from '../../services/movie';
 import { WishlistService } from '../../services/wishlist';
+import { ContentFilterService } from '../../services/content-filter';
 
 @Component({
   selector: 'app-movie-details',
@@ -21,7 +22,8 @@ export class MovieDetails implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private movieService: MovieService,
-    private wishlist: WishlistService
+    private wishlist: WishlistService,
+    private contentFilter: ContentFilterService
   ) {}
 
   ngOnInit() {
@@ -52,7 +54,9 @@ export class MovieDetails implements OnInit {
   loadRecommendations() {
     this.movieService.getMovieRecommendations(this.movieId).subscribe({
       next: (data) => {
-        this.recommendations = data.results?.slice(0, 6) || [];
+        const allRecommendations = data.results || [];
+        // Filter recommendations for family-friendly content and take first 6
+        this.recommendations = this.contentFilter.filterMovies(allRecommendations).slice(0, 6);
       },
       error: (error) => {
         console.error('Error fetching recommendations:', error);
