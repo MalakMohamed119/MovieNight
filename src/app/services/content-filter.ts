@@ -4,12 +4,15 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ContentFilterService {
-  // TMDb genre IDs to filter out for family-friendly content
+  // TMDb genre IDs to filter out for halal/family-friendly content
   private restrictedGenres = [
-    10749, // Romance (only this one for halal requirement)
-    27     // Horror (too scary)
-    // Note: Removed Crime, Thriller, Drama to allow more variety
-    // Only blocking Romance (for halal) and Horror (too scary)
+    10749, // Romance - NOT HALAL
+    27,    // Horror - Too violent/scary
+    53,    // Thriller - Often contains inappropriate content
+    80,    // Crime - Often contains violence/inappropriate content
+    18,    // Drama - Often contains mature themes/romance
+    9648,  // Mystery - Often contains dark themes
+    35     // Comedy - Can contain inappropriate humor/content
   ];
 
   // Movie ratings to filter out (R-rated, NC-17, etc.)
@@ -24,11 +27,28 @@ export class ContentFilterService {
     'M'
   ];
 
-  // Keywords that suggest inappropriate content (very basic filtering)
+  // Keywords that suggest inappropriate content - COMPREHENSIVE HALAL FILTERING
   private restrictedKeywords = [
-    'erotic', 'adult', 'sexy', 'nude', 'strip'
-    // Removed many keywords to be less restrictive
-    // Only filtering obvious adult content
+    // Romance/Sexual content - NOT HALAL
+    'romance', 'romantic', 'love', 'dating', 'relationship', 'marriage', 'wedding',
+    'kiss', 'kissing', 'passion', 'seduction', 'affair', 'intimate', 'intimacy',
+    'erotic', 'adult', 'sexy', 'nude', 'strip', 'sensual', 'sexual',
+    
+    // Violence/Crime - NOT APPROPRIATE
+    'murder', 'kill', 'killer', 'death', 'violence', 'violent', 'blood', 'gore',
+    'crime', 'criminal', 'gang', 'mafia', 'drugs', 'drug', 'alcohol', 'drunk',
+    'gambling', 'casino', 'bet', 'weapon', 'gun', 'shooting', 'fight', 'war',
+    
+    // Dark/Horror themes - NOT APPROPRIATE
+    'horror', 'scary', 'haunted', 'ghost', 'demon', 'evil', 'dark', 'nightmare',
+    'thriller', 'suspense', 'mystery', 'psychological',
+    
+    // Comedy/Humor - NOT APPROPRIATE
+    'comedy', 'funny', 'humor', 'humour', 'joke', 'jokes', 'parody', 'satire',
+    'laughs', 'hilarious', 'comic', 'comedian', 'amusing',
+    
+    // Inappropriate themes
+    'revenge', 'betrayal', 'deception', 'lie', 'cheat', 'steal', 'corruption'
   ];
 
   constructor() {}
@@ -44,27 +64,51 @@ export class ContentFilterService {
    * Check if a single movie is appropriate for family viewing
    */
   isMovieAppropriate(movie: any): boolean {
-    // Check genre restrictions
-    if (this.hasRestrictedGenres(movie)) {
+    // POSITIVE FILTERING: Only allow movies with safe genres
+    if (!this.hasSafeGenres(movie)) {
       return false;
     }
 
-    // Skip rating restrictions for now (most API movies don't have this data)
-    // if (this.hasRestrictedRating(movie)) {
-    //   return false;
-    // }
+    // Check genre restrictions (additional safety)
+    if (this.hasRestrictedGenres(movie)) {
+      return false;
+    }
 
     // Check title and overview for inappropriate content
     if (this.hasRestrictedContent(movie)) {
       return false;
     }
 
-    // Check vote average - filter out movies with very low ratings (likely poor quality)
-    if (movie.vote_average && movie.vote_average < 2.0) {
+    // Check vote average - must have decent quality
+    if (movie.vote_average && movie.vote_average < 4.0) {
       return false;
     }
 
     return true;
+  }
+
+  /**
+   * Check if movie has at least one safe/family-friendly genre
+   */
+  private hasSafeGenres(movie: any): boolean {
+    if (!movie.genre_ids || movie.genre_ids.length === 0) return false;
+    
+    const safeGenres = [
+      16,    // Animation - SAFE
+      10751, // Family - SAFE
+      14,    // Fantasy - SAFE
+      10402, // Music - SAFE
+      12,    // Adventure - SAFE (if clean)
+      878,   // Science Fiction - SAFE (if clean)
+      99,    // Documentary - SAFE
+      36,    // History - SAFE
+      // REMOVED: Comedy (35) - can contain inappropriate humor
+      // REMOVED: Romance (10749) - not halal
+    ];
+    
+    return movie.genre_ids.some((genreId: number) => 
+      safeGenres.includes(genreId)
+    );
   }
 
   /**

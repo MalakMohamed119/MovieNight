@@ -36,9 +36,12 @@ export class TrendifyComponent implements OnInit {
   }
 
   loadTrendingMovies(page: number = this.page) {
-    // Load 6 pages to ensure we have enough content after filtering
-    const startPage = Math.ceil(page * 6 - 5);
-    const pages = [startPage, startPage + 1, startPage + 2, startPage + 3, startPage + 4, startPage + 5];
+    // Load 10 pages to ensure we have enough halal content after strict filtering
+    const startPage = Math.ceil(page * 10 - 9);
+    const pages = [];
+    for (let i = 0; i < 10; i++) {
+      pages.push(startPage + i);
+    }
 
     Promise.all(
       pages.map(p => firstValueFrom(this.movieService.getTrendingMovies(p)))
