@@ -1,0 +1,38 @@
+<div class="settings-container">
+  <h2>Content Filter Settings</h2>
+  <p>Manage what types of movies are shown on your website.</p>
+
+  <div class="filter-section">
+    <h3>Content Filtering</h3>
+    <div class="toggle-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="contentFilterEnabled" />
+        Enable Family-Friendly Content Filtering
+      </label>
+    </div>
+  </div>
+
+  <div class="genre-section" *ngIf="contentFilterEnabled">
+    <h3>Restricted Genres</h3>
+    <p>These movie genres will be hidden from view:</p>
+    
+    <div class="genre-list">
+      <div *ngFor="let genreId of getAllGenres()" class="genre-item">
+        <label>
+          <input 
+            type="checkbox" 
+            [checked]="isGenreRestricted(genreId)"
+            (change)="toggleGenreRestriction(genreId)"
+          />
+          {{ getGenreName(genreId) }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-secondary" (click)="resetToDefaults()">
+      Reset to Defaults
+    </button>
+  </div>
+</div>

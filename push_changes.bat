@@ -20,6 +20,8 @@ git commit -m "Add halal-friendly content filtering system
 - Remove search clear button as requested
 - Update trendify component with comprehensive filtering
 - Update movie-details component with filtered recommendations
+- Add optional settings component for filter management
+- Create missing template and CSS files
 - Ensure all displayed content is appropriate and halal-friendly"
 echo.
 
